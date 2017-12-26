@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
 
     let maxHeaderHeight: CGFloat = 88;
-    let minHeaderHeight: CGFloat = 44;
+    let minHeaderHeight: CGFloat = 0;
 
     var previousScrollOffset: CGFloat = 0;
 
@@ -52,6 +52,16 @@ extension ViewController: UITableViewDataSource {
 }
 
 extension ViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.view.layoutIfNeeded()
+        UIView.animate(withDuration: 0.2, animations: {
+            self.headerHeightConstraint.constant = self.minHeaderHeight
+            self.updateHeader()
+            self.view.layoutIfNeeded()
+        })
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let scrollDiff = scrollView.contentOffset.y - self.previousScrollOffset
 
